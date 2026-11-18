@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pájaro Azul — Fiambres artesanales, salamines, jamón crudo, quesos de campo y tablas de picada en Mar del Plata.">
+    <title>Pájaro Azul | Fiambres Artesanales</title>
+
+    <!-- Google Fonts: Playfair Display (serif elegante para títulos) + Plus Jakarta Sans (sans limpia para textos) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Barra de progreso fina superior -->
+    <div id="scroll-progress-bar" class="scroll-progress-bar" aria-hidden="true"></div>
+
+    <!-- Cursor personalizado (solo escritorio) -->
+    <div id="custom-cursor" class="custom-cursor" aria-hidden="true"></div>
+
+    <!-- Preloader animado con porcentaje para la secuencia de 150 cuadros -->
+    <div id="loader-overlay" class="loader-overlay" role="status" aria-live="polite">
+        <div class="loader-box">
+            <span class="loader-eyebrow">Pájaro Azul · Charcutería</span>
+            <p class="loader-title">Preparando el corte artesanal</p>
+            <div class="loader-bar-track">
+                <div id="loader-bar-fill" class="loader-bar-fill"></div>
+            </div>
+            <span id="loader-percent" class="loader-percent">0%</span>
+        </div>
+    </div>
+
+    <!-- Navegación superior flotante -->
+    <header class="site-nav">
+        <div class="nav-inner">
+            <a href="#hero-intro" class="nav-brand">Pájaro Azul</a>
+            <nav class="nav-links" aria-label="Navegación principal">
+                <a href="#tabla-section">La Tabla 3D</a>
+                <a href="#menu-section">Nuestro Menú</a>
+                <a href="#cierre-section">Pedidos</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- 1. INTRO CINEMATOGRÁFICA (SCROLL PIN + 150 CUADROS WEBP) -->
+        <section id="hero-intro" class="hero-intro">
+            <canvas id="intro-canvas" class="intro-canvas" aria-label="Secuencia cinematográfica de un salamín cortándose y formando el nombre Pájaro Azul"></canvas>
+            <div class="hero-vignette" aria-hidden="true"></div>
+
+            <!-- Indicador superior inicial de scroll -->
+            <div class="hero-scroll-cue" aria-hidden="true">
+                <span>Deslizá para cortar</span>
+                <div class="scroll-cue-line"></div>
+            </div>
+
+            <!-- Subtítulo que aparece con fade al final de la secuencia cuando queda formado "Pájaro Azul" -->
+            <div id="hero-subtitle-overlay" class="hero-subtitle-overlay">
+                <p class="hero-kicker">Tradición mendocina · Mar del Plata</p>
+                <h1 class="hero-subtitle">Fiambres artesanales</h1>
+                <p class="hero-tagline">Curados en silencio, cortados en su punto justo para compartir en la mesa.</p>
+                <a href="#tabla-section" class="hero-explore-link">Explorar la tabla</a>
+            </div>
+        </section>
+
+        <!-- 2. TABLA 3D INTERACTIVA (THREE.JS + 3d.glb) -->
+        <section id="tabla-section" class="tabla-section">
+            <div class="section-container tabla-grid">
+                <!-- Escenario 3D interactivo -->
+                <div class="tabla-stage-wrapper">
+                    <div id="tabla-canvas-container" class="tabla-canvas-container" role="region" aria-label="Modelo 3D interactivo de tabla con salamines Pájaro Azul"></div>
+                    <p id="tabla-status" class="tabla-status">Arrastrá con el mouse o el dedo para girar la tabla</p>
+                </div>
+
+                <!-- Texto al costado sobre la marca (siempre visible incluso si falla el 3D) -->
+                <div class="tabla-copy">
+                    <span class="section-label">Oficio de secadero</span>
+                    <h2 class="section-title" data-magnetic-title>El arte de esperar cada corte</h2>
+                    <p class="section-paragraph">
+                        En <strong>Pájaro Azul</strong> creemos que los mejores sabores nacen de la paciencia. Elaboramos nuestros embutidos y curados respetando las recetas familiares nacidas al pie de la cordillera en Mendoza y maduradas hoy en Mar del Plata, sin acelerantes ni conservantes artificiales.
+                    </p>
+                    <p class="section-paragraph">
+                        Cada pieza descansa el tiempo que necesita hasta lograr ese aroma profundo a especias molidas y madera noble que invita a reunirse alrededor de una buena tabla.
+                    </p>
+                    <div class="tabla-highlights">
+                        <div class="highlight-pill">
+                            <strong>100% Artesanal</strong>
+                            <span>Sin aditivos ni nitritos</span>
+                        </div>
+                        <div class="highlight-pill">
+                            <strong>Curado Lento</strong>
+                            <span>Partidas cortas familiares</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. MENÚ CON TARJETAS 3D (TILT + FLIP 180° AL HACER CLIC O TOCAR) -->
+        <section id="menu-section" class="menu-section">
+            <div class="section-container">
+                <div class="menu-header">
+                    <span class="section-label">Selección de la cava</span>
+                    <h2 class="section-title" data-magnetic-title>Nuestra carta artesanal</h2>
+                    <p class="menu-subtitle">
+                        Pasá el cursor para inclinar cada pieza y hacé clic o tocá cualquier tarjeta para darla vuelta y descubrir sus notas de curado y precios.
+                    </p>
+                </div>
+
+                <div class="menu-cards-grid">
+                    <!-- Tarjeta 1: Salamín -->
+                    <article class="menu-card-3d" tabindex="0" role="button" aria-pressed="false" aria-label="Salamín Picado Grueso — Tocar para dar vuelta y ver descripción y precio">
+                        <div class="card-tilt-shell">
+                            <div class="card-flipper">
+                                <!-- FRENTE -->
+                                <div class="card-face card-front">
+                                    <div class="card-visual visual-salamin">
+                                        <div class="visual-badge">Secadero propio</div>
+                                        <svg class="visual-emblem" viewBox="0 0 160 120" aria-hidden="true">
+                                            <ellipse cx="62" cy="64" rx="42" ry="28" fill="#7a201b" stroke="#f4efe3" stroke-width="2"/>
+                                            <circle cx="48" cy="56" r="5" fill="#f4efe3" opacity="0.85"/>
+                                            <circle cx="68" cy="52" r="4" fill="#f4efe3" opacity="0.8"/>
+                                            <circle cx="75" cy="70" r="6" fill="#f4efe3" opacity="0.85"/>
+                                            <circle cx="54" cy="74" r="3.5" fill="#f4efe3" opacity="0.75"/>
+                                            <ellipse cx="98" cy="58" rx="42" ry="28" fill="#9e2b25" stroke="#f4efe3" stroke-width="2"/>
+                                            <circle cx="84" cy="50" r="5.5" fill="#f4efe3" opacity="0.9"/>
+                                            <circle cx="106" cy="48" r="4" fill="#f4efe3" opacity="0.85"/>
+                                            <circle cx="112" cy="66" r="6" fill="#f4efe3" opacity="0.9"/>
+                                            <circle cx="90" cy="68" r="4.5" fill="#f4efe3" opacity="0.8"/>
+                                        </svg>
+                                    </div>
+                                    <div class="card-front-info">
+                                        <span class="card-category">Embutido estacionado</span>
+                                        <h3 class="card-name">Salamín de Campo</h3>
+                                        <span class="card-flip-hint">Clic o toque para ver dorso ↻</span>
+                                    </div>
+                                </div>
+
+                                <!-- DORSO -->
+                                <div class="card-face card-back">
+                                    <span class="card-back-tag">Receta familiar</span>
+                                    <h3 class="card-back-title">Salamín de Campo</h3>
+                                    <p class="card-back-desc">
+                                        Elaborado con cortes seleccionados de cerdo, tocino en dados firmes, pimienta negra recién quebrada y ajo macerado en vino tinto mendocino. Atado a mano y madurado al natural.
+                                    </p>
+                                    <div class="card-back-meta">
+                                        <div>
+                                            <span>Presentación</span>
+                                            <strong>Pieza ~320 g</strong>
+                                        </div>
+                                        <div class="card-price">
+                                            <span>Precio</span>
+                                            <strong>$8.500</strong>
+                                        </div>
+                                    </div>
+                                    <a href="https://wa.me/5492236689837?text=Hola%2C%20quiero%20encargar%20Salam%C3%ADn%20de%20Campo%20P%C3%A1jaro%20Azul."
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       class="card-order-link">
+                                        Pedir esta pieza
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Tarjeta 2: Jamón Crudo / Bondiola Curada -->
+                    <article class="menu-card-3d" tabindex="0" role="button" aria-pressed="false" aria-label="Jamón Crudo y Bondiola — Tocar para dar vuelta y ver descripción y precio">
+                        <div class="card-tilt-shell">
+                            <div class="card-flipper">
+                                <!-- FRENTE -->
+                                <div class="card-face card-front">
+                                    <div class="card-visual visual-crudo">
+                                        <div class="visual-badge">Curación lenta</div>
+                                        <svg class="visual-emblem" viewBox="0 0 160 120" aria-hidden="true">
+                                            <path d="M28,74 C28,42 64,28 112,34 C132,37 138,58 124,78 C108,96 46,98 28,74 Z" fill="#84231e" stroke="#f4efe3" stroke-width="2"/>
+                                            <path d="M40,66 C62,52 92,50 116,58" stroke="#f4efe3" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.85"/>
+                                            <path d="M48,78 C72,68 94,68 110,72" stroke="#f4efe3" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.7"/>
+                                        </svg>
+                                    </div>
+                                    <div class="card-front-info">
+                                        <span class="card-category">Salazón en seco</span>
+                                        <h3 class="card-name">Jamón Crudo &amp; Bondiola</h3>
+                                        <span class="card-flip-hint">Clic o toque para ver dorso ↻</span>
+                                    </div>
+                                </div>
+
+                                <!-- DORSO -->
+                                <div class="card-face card-back">
+                                    <span class="card-back-tag">Reserva de cava</span>
+                                    <h3 class="card-back-title">Jamón Crudo &amp; Bondiola</h3>
+                                    <p class="card-back-desc">
+                                        Curados únicamente con sal marina pura y rebozados en pimentón dulce y hierbas de montaña. Fetas finas de color rubí profundo que se funden a temperatura ambiente.
+                                    </p>
+                                    <div class="card-back-meta">
+                                        <div>
+                                            <span>Presentación</span>
+                                            <strong>Bandeja 250 g / Pieza</strong>
+                                        </div>
+                                        <div class="card-price">
+                                            <span>Precio</span>
+                                            <strong>$9.800</strong>
+                                        </div>
+                                    </div>
+                                    <a href="https://wa.me/5492236689837?text=Hola%2C%20quiero%20encargar%20Jam%C3%B3n%20Crudo%20y%20Bondiola%20P%C3%A1jaro%20Azul."
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       class="card-order-link">
+                                        Pedir esta pieza
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Tarjeta 3: Quesos de Campo -->
+                    <article class="menu-card-3d" tabindex="0" role="button" aria-pressed="false" aria-label="Quesos de Campo — Tocar para dar vuelta y ver descripción y precio">
+                        <div class="card-tilt-shell">
+                            <div class="card-flipper">
+                                <!-- FRENTE -->
+                                <div class="card-face card-front">
+                                    <div class="card-visual visual-quesos">
+                                        <div class="visual-badge">Horma artesanal</div>
+                                        <svg class="visual-emblem" viewBox="0 0 160 120" aria-hidden="true">
+                                            <polygon points="32,82 88,30 130,68 32,82" fill="#d9a756" stroke="#f4efe3" stroke-width="2"/>
+                                            <polygon points="32,82 130,68 130,92 32,96" fill="#b88433" stroke="#f4efe3" stroke-width="2"/>
+                                            <circle cx="72" cy="64" r="4.5" fill="#14161c" opacity="0.35"/>
+                                            <circle cx="96" cy="58" r="3" fill="#14161c" opacity="0.35"/>
+                                            <circle cx="84" cy="78" r="3.5" fill="#9e2b25" opacity="0.65"/>
+                                        </svg>
+                                    </div>
+                                    <div class="card-front-info">
+                                        <span class="card-category">Natural y especiados</span>
+                                        <h3 class="card-name">Quesos de Campo</h3>
+                                        <span class="card-flip-hint">Clic o toque para ver dorso ↻</span>
+                                    </div>
+                                </div>
+
+                                <!-- DORSO -->
+                                <div class="card-face card-back">
+                                    <span class="card-back-tag">Gouda de tambo</span>
+                                    <h3 class="card-back-title">Quesos de Campo</h3>
+                                    <p class="card-back-desc">
+                                        Quesos Gouda de pasta semidura y textura mantecosa. Disponibles en versión clásica Natural o en nuestro Mix condimentado con Orégano, Pimienta en grano o Ají molido.
+                                    </p>
+                                    <div class="card-back-meta">
+                                        <div>
+                                            <span>Presentación</span>
+                                            <strong>Cuña al vacío ~350 g</strong>
+                                        </div>
+                                        <div class="card-price">
+                                            <span>Precio</span>
+                                            <strong>$7.900</strong>
+                                        </div>
+                                    </div>
+                                    <a href="https://wa.me/5492236689837?text=Hola%2C%20quiero%20encargar%20Quesos%20de%20Campo%20P%C3%A1jaro%20Azul."
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       class="card-order-link">
+                                        Pedir esta pieza
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Tarjeta 4: Tablas de Picada -->
+                    <article class="menu-card-3d" tabindex="0" role="button" aria-pressed="false" aria-label="Tablas de Picada — Tocar para dar vuelta y ver descripción y precio">
+                        <div class="card-tilt-shell">
+                            <div class="card-flipper">
+                                <!-- FRENTE -->
+                                <div class="card-face card-front">
+                                    <div class="card-visual visual-tablas">
+                                        <div class="visual-badge">Listas para servir</div>
+                                        <svg class="visual-emblem" viewBox="0 0 160 120" aria-hidden="true">
+                                            <rect x="24" y="34" width="102" height="54" rx="10" fill="#5e3a24" stroke="#f4efe3" stroke-width="2"/>
+                                            <circle cx="136" cy="61" r="9" fill="#5e3a24" stroke="#f4efe3" stroke-width="2"/>
+                                            <circle cx="50" cy="61" r="14" fill="#9e2b25" opacity="0.9"/>
+                                            <circle cx="78" cy="61" r="14" fill="#d9a756" opacity="0.9"/>
+                                            <circle cx="104" cy="61" r="14" fill="#1e5f9c" opacity="0.9"/>
+                                        </svg>
+                                    </div>
+                                    <div class="card-front-info">
+                                        <span class="card-category">Para compartir</span>
+                                        <h3 class="card-name">Tablas &amp; Picadas</h3>
+                                        <span class="card-flip-hint">Clic o toque para ver dorso ↻</span>
+                                    </div>
+                                </div>
+
+                                <!-- DORSO -->
+                                <div class="card-face card-back">
+                                    <span class="card-back-tag">Degustación completa</span>
+                                    <h3 class="card-back-title">Tablas &amp; Picadas</h3>
+                                    <p class="card-back-desc">
+                                        Combinación equilibrada de nuestro salamín de campo, bondiola curada, jamón crudo y selección de quesos Gouda naturales y especiados, lista para llevar a la mesa.
+                                    </p>
+                                    <div class="card-back-meta">
+                                        <div>
+                                            <span>Presentación</span>
+                                            <strong>Comen 4 a 6 personas</strong>
+                                        </div>
+                                        <div class="card-price">
+                                            <span>Precio</span>
+                                            <strong>$22.500</strong>
+                                        </div>
+                                    </div>
+                                    <a href="https://wa.me/5492236689837?text=Hola%2C%20quiero%20encargar%20una%20Tabla%20de%20Picada%20P%C3%A1jaro%20Azul."
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       class="card-order-link">
+                                        Pedir esta tabla
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. CIERRE: ZONA DE ENTREGA, WHATSAPP Y BOTÓN MAGNÉTICO -->
+        <section id="cierre-section" class="cierre-section">
+            <div class="section-container cierre-box">
+                <span class="section-label">Directo de nuestra familia a tu mesa</span>
+                <h2 class="section-title cierre-title" data-magnetic-title>¿Listo para armar la picada?</h2>
+                <p class="cierre-description">
+                    Realizamos entregas en toda la zona de <strong>Mar del Plata, Sierra de los Padres, Chapadmalal y Santa Clara del Mar</strong>. Escribinos por WhatsApp para coordinar tu pedido del día o encargar piezas enteras y tablas para tus reuniones.
+                </p>
+
+                <div class="delivery-meta">
+                    <div class="delivery-item">
+                        <span>Zona de entrega</span>
+                        <strong>Mar del Plata y Costa Atlántica</strong>
+                    </div>
+                    <div class="delivery-item">
+                        <span>Atención por WhatsApp</span>
+                        <strong>+54 9 223 668-9837</strong>
+                    </div>
+                </div>
+
+                <div class="magnetic-cta-wrap">
+                    <a id="magnetic-order-btn"
+                       href="https://wa.me/5492236689837?text=Hola%2C%20quiero%20hacer%20un%20pedido%20en%20P%C3%A1jaro%20Azul."
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="magnetic-order-btn">
+                        <span class="magnetic-btn-text">Hacé tu pedido</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER SIMPLE CON REDES -->
+    <footer class="site-footer">
+        <div class="section-container footer-inner">
+            <div class="footer-brand">
+                <strong>Pájaro Azul</strong>
+                <span>Fiambres artesanales · Mar del Plata, Argentina</span>
+            </div>
+            <div class="footer-socials">
+                <a href="https://www.instagram.com/pajaroazul.charcuteria" target="_blank" rel="noopener noreferrer">Instagram</a>
+                <a href="https://wa.me/5492236689837" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
